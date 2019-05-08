@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_300"
+    android:layout_height="@dimen/dp_170"
+    android:background="@drawable/dialog_shape">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_35"
+        android:text="您是否确定退出？"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_20"
+        android:textStyle="normal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_25"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.7" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_35"
+            android:layout_weight="1"
+            android:background="@drawable/btn_out_a"
+            android:text="取消"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="normal" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.2" />
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_35"
+            android:layout_weight="1"
+            android:background="@drawable/btn_out_b"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="normal" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.7" />
+    </LinearLayout>
+
+</RelativeLayout>

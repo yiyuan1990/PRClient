@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_login"
+    tools:context=".main.act.MainActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_20"
+        android:src="@mipmap/ic_logo" />
+
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="@dimen/dp_23"
+        android:layout_height="@dimen/dp_23"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/dp_15"
+        android:background="@mipmap/ic_close" />
+
+    <TextView
+        android:id="@+id/tvTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_90"
+        android:layout_marginRight="@dimen/dp_90"
+        android:text="架空输电线路地线巡检机器人"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_25"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/rla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTip"
+        android:layout_alignLeft="@id/tvTip"
+        android:layout_alignRight="@id/tvTip"
+        android:layout_marginTop="@dimen/dp_40">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:background="@drawable/edit_shape_a"
+            android:hint="用户名"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivName"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:src="@mipmap/ic_user" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rla"
+        android:layout_alignLeft="@id/tvTip"
+        android:layout_alignRight="@id/tvTip"
+        android:layout_marginTop="@dimen/dp_15">
+
+        <EditText
+            android:id="@+id/etPW"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:background="@drawable/edit_shape_a"
+            android:hint="密码"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivPW"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:src="@mipmap/ic_pw" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlb"
+        android:layout_alignLeft="@id/rlb"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.zkkc.prclient.weight.MCheckBox
+            android:id="@+id/mcb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:color_checked="@color/white"
+            app:color_tick="@color/blue"
+            app:color_unchecked="@color/white"
+            app:color_unchecked_stroke="@color/white"
+            app:stroke_width="@dimen/dp_1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text="记住用户名和密码"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_45"
+        android:layout_below="@id/llc"
+        android:layout_alignLeft="@id/tvTip"
+        android:layout_alignRight="@id/tvTip"
+        android:layout_marginTop="@dimen/dp_25"
+        android:background="@drawable/btn_login"
+        android:text="登录"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_18"
+        android:textStyle="bold" />
+</RelativeLayout>
