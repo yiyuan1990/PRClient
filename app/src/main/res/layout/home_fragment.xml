@@ -17,21 +17,21 @@
 
         <ImageView
             android:id="@+id/ivPopup"
-            android:layout_width="@dimen/dp_25"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_45"
             android:layout_marginTop="@dimen/dp_72"
-            android:background="@drawable/popup_shape"
-            android:paddingTop="@dimen/dp_7"
-            android:paddingBottom="@dimen/dp_7"
+            android:background="@drawable/yy_shape"
+            android:paddingTop="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_15"
             android:src="@mipmap/ic_right" />
 
         <RelativeLayout
             android:id="@+id/rlPopup"
-            android:layout_width="@dimen/dp_70"
-            android:layout_height="@dimen/dp_145"
+            android:layout_width="@dimen/dp_75"
+            android:layout_height="@dimen/dp_160"
             android:layout_marginTop="@dimen/dp_15"
-            android:background="@drawable/popup_shape">
-
+            android:background="@drawable/yy_shape">
+            <!--android:background="@drawable/popup_shape"-->
             <ImageView
                 android:id="@+id/ivMark"
                 android:layout_width="@dimen/dp_15"
@@ -141,7 +141,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_10"
-            android:background="@drawable/popup_shape_a"
+            android:background="@drawable/yy_shape_b"
             android:orientation="vertical">
 
             <LinearLayout

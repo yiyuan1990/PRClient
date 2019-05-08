@@ -50,4 +50,5 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.github.forvv231:EasyNavigation:1.0.2'
     implementation files('libs/BaiduLBS_Android.jar')
+    implementation 'com.github.ltym2016:FilterTabView:1.2.0'
 }

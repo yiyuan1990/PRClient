@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_40"
     android:gravity="center"
-    android:textColor="@color/black"
+    android:text="全部线路"
+    android:textColor="@color/orange"
     android:textSize="@dimen/sp_14"
     android:textStyle="normal" />

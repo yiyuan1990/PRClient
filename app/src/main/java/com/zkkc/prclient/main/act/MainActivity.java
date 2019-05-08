@@ -1,9 +1,11 @@
 package com.zkkc.prclient.main.act;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.next.easynavigation.constant.Anim;
 import com.next.easynavigation.view.EasyNavigationBar;
 import com.zkkc.prclient.R;
@@ -24,8 +26,6 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.navigationBar)
     EasyNavigationBar navigationBar;
-
-
 
 
     private String[] tabText = {"首页", "视频", "图片", "退出"};
@@ -73,6 +73,7 @@ public class MainActivity extends BaseActivity {
                 .tabTextTop(2)     //Tab文字距Tab图标的距离
                 .navigationHeight(50)//导航栏高度
                 .navigationBackground(getResources().getColor(R.color.light_white))   //导航栏背景色
+                .lineHeight(ConvertUtils.dp2px(3))         //分割线高度  默认1px
                 .onTabClickListener(new EasyNavigationBar.OnTabClickListener() {   //Tab点击事件  return true 页面不会切换
                     @Override
                     public boolean onTabClickEvent(View view, int position) {
@@ -89,6 +90,8 @@ public class MainActivity extends BaseActivity {
                 .canScroll(false)    //Viewpager能否左右滑动
                 .fragmentManager(getSupportFragmentManager())
                 .build();
+        View lineView = navigationBar.getLineView();
+        lineView.setBackground(getResources().getDrawable(R.drawable.yy_shape_c));
     }
 
 

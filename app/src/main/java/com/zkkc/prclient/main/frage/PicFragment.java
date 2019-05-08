@@ -1,18 +1,20 @@
 package com.zkkc.prclient.main.frage;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.zkkc.prclient.R;
 import com.zkkc.prclient.base.BaseFragment;
 import com.zkkc.prclient.main.contract.PicContract;
+import com.zkkc.prclient.main.entiy.MediaListBean;
 import com.zkkc.prclient.main.p.PicPresenter;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -21,14 +23,7 @@ import butterknife.Unbinder;
  */
 public class PicFragment extends BaseFragment<PicContract.View, PicContract.Presenter> implements PicContract.View {
 
-    @BindView(R.id.rvChoose)
-    RecyclerView rvChoose;
-    @BindView(R.id.rvChoose2)
-    RecyclerView rvChoose2;
-    @BindView(R.id.rvChoose3)
-    RecyclerView rvChoose3;
     Unbinder unbinder;
-
     @Override
     public int getLayoutId() {
         return R.layout.pic_fragment;
@@ -61,5 +56,25 @@ public class PicFragment extends BaseFragment<PicContract.View, PicContract.Pres
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick({R.id.lla, R.id.btnOk})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+
+        }
+    }
+
+
+    @Override
+    public void queryMediaListSuccess(MediaListBean b) {
+        ToastUtils.showShort("媒体查询成功");
+        LogUtils.i(b.toString());
+
+    }
+
+    @Override
+    public void queryMediaListFailure(String strErr) {
+        ToastUtils.showShort(strErr);
     }
 }

@@ -9,7 +9,6 @@ import com.zkkc.prclient.main.callback.IQueryLineDeviceList;
 import com.zkkc.prclient.main.entiy.LineDeviceListBean;
 import com.zkkc.prclient.main.entiy.QueryBean;
 
-import static com.zkkc.prclient.PRCConstant.LOGIN;
 import static com.zkkc.prclient.PRCConstant.USER_LINE_DEVICE_LIST;
 
 /**

@@ -5,72 +5,84 @@
     android:background="@color/light_white">
 
     <LinearLayout
-        android:id="@+id/llTop"
+        android:id="@+id/lla"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="@dimen/dp_50"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_30">
 
         <TextView
+            android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="全部线路"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/sp_16"
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/iv"
             android:layout_width="@dimen/dp_14"
             android:layout_height="@dimen/dp_14"
             android:layout_marginLeft="@dimen/dp_20"
             android:src="@mipmap/icon_down" />
-
     </LinearLayout>
-    <!--内容RecyclerView-->
+    <!--内容-->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewOne"
+        android:id="@+id/rvPic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/llTop">
+        android:layout_below="@id/lla">
 
     </android.support.v7.widget.RecyclerView>
     <!--筛选-->
-    <!--<LinearLayout-->
-        <!--android:id="@+id/llChoose"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@id/llTop"-->
-        <!--android:background="@color/white"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:visibility="visible"-->
-        <!--android:layout_marginBottom="@dimen/dp_50">-->
+    <LinearLayout
+        android:id="@+id/llb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lla"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_30"
+        android:visibility="gone">
 
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/rvChoose"-->
-            <!--android:layout_width="@dimen/dp_150"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:paddingLeft="@dimen/dp_30">-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvOne"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="match_parent">
 
-        <!--</android.support.v7.widget.RecyclerView>-->
+        </android.support.v7.widget.RecyclerView>
 
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/rvChoose2"-->
-            <!--android:layout_width="@dimen/dp_150"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:paddingLeft="@dimen/dp_30">-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTwo"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="match_parent">
 
-        <!--</android.support.v7.widget.RecyclerView>-->
+        </android.support.v7.widget.RecyclerView>
 
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/rvChoose3"-->
-            <!--android:layout_width="@dimen/dp_150"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:paddingLeft="@dimen/dp_30">-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvThree"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="match_parent">
 
-        <!--</android.support.v7.widget.RecyclerView>-->
-    <!--</LinearLayout>-->
+        </android.support.v7.widget.RecyclerView>
 
+        <View
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1" />
 
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="@drawable/btn_out_b"
+            android:text="确定"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </RelativeLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <padding
+                android:bottom="2dp"
+                android:left="0dp"
+                android:right="2dp"
+                android:top="2dp" />
+            <solid android:color="#10C0C0C0" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <padding
+                android:bottom="2dp"
+                android:left="0dp"
+                android:right="2dp"
+                android:top="2dp" />
+            <solid android:color="#1AC0C0C0" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <padding
+                android:bottom="2dp"
+                android:left="0dp"
+                android:right="2dp"
+                android:top="2dp" />
+            <solid android:color="#26C0C0C0" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <padding
+                android:bottom="2dp"
+                android:left="0dp"
+                android:right="2dp"
+                android:top="2dp" />
+            <solid android:color="#33C0C0C0" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#f5f5f5" />
+            <corners
+                android:bottomRightRadius="@dimen/dp_8"
+                android:topRightRadius="@dimen/dp_8"/>
+        </shape>
+    </item>
+</layer-list>
