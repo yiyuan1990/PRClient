@@ -37,40 +37,40 @@
 
     </android.support.v7.widget.RecyclerView>
     <!--筛选-->
-    <LinearLayout
-        android:id="@+id/llChoose"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/llTop"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        android:layout_marginBottom="@dimen/dp_50">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/llChoose"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/llTop"-->
+        <!--android:background="@color/white"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:visibility="visible"-->
+        <!--android:layout_marginBottom="@dimen/dp_50">-->
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvChoose"
-            android:layout_width="@dimen/dp_150"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/dp_30">
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/rvChoose"-->
+            <!--android:layout_width="@dimen/dp_150"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:paddingLeft="@dimen/dp_30">-->
 
-        </android.support.v7.widget.RecyclerView>
+        <!--</android.support.v7.widget.RecyclerView>-->
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvChoose2"
-            android:layout_width="@dimen/dp_150"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/dp_30">
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/rvChoose2"-->
+            <!--android:layout_width="@dimen/dp_150"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:paddingLeft="@dimen/dp_30">-->
 
-        </android.support.v7.widget.RecyclerView>
+        <!--</android.support.v7.widget.RecyclerView>-->
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvChoose3"
-            android:layout_width="@dimen/dp_150"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/dp_30">
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/rvChoose3"-->
+            <!--android:layout_width="@dimen/dp_150"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:paddingLeft="@dimen/dp_30">-->
 
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+        <!--</android.support.v7.widget.RecyclerView>-->
+    <!--</LinearLayout>-->
 
 
 </RelativeLayout>

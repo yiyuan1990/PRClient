@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.luoxudong.app.threadpool.ThreadPoolHelp;
 import com.vise.utils.assist.SSLUtil;
@@ -61,6 +62,7 @@ public class PRClientApp extends Application {
         HashMap<String, String> globalHeaders = new HashMap<String, String>();
         globalHeaders.put("Content-Type", "application/json");
         globalHeaders.put("accessToken", SPUtils.getInstance().getString(ACCESSTOKEN));
+        LogUtils.i("accessToken",SPUtils.getInstance().getString(ACCESSTOKEN));
 //        HashMap<String, String> globalParams = new HashMap<String, String>();
 //        globalParams.put("accessToken", SPUtils.getInstance().getString(ACCESSTOKEN));//app类型
         ViseHttp.init(this);

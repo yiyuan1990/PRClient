@@ -23,6 +23,10 @@ public class PicFragment extends BaseFragment<PicContract.View, PicContract.Pres
 
     @BindView(R.id.rvChoose)
     RecyclerView rvChoose;
+    @BindView(R.id.rvChoose2)
+    RecyclerView rvChoose2;
+    @BindView(R.id.rvChoose3)
+    RecyclerView rvChoose3;
     Unbinder unbinder;
 
     @Override

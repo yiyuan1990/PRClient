@@ -58,8 +58,8 @@ public class WelcomeAct extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Intent intent = new Intent(WelcomeAct.this, MainActivity.class);
-//                Intent intent = new Intent(WelcomeAct.this, LoginAct.class);
+//                Intent intent = new Intent(WelcomeAct.this, MainActivity.class);
+                Intent intent = new Intent(WelcomeAct.this, LoginAct.class);
                 startActivity(intent);
                 finish();
             }
