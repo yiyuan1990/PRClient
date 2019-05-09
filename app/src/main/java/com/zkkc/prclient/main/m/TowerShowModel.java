@@ -1,34 +1,29 @@
 package com.zkkc.prclient.main.m;
 
-import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.vise.xsnow.http.ViseHttp;
 import com.vise.xsnow.http.callback.ACallback;
-import com.zkkc.prclient.base.BaseModel;
-import com.zkkc.prclient.main.callback.IQueryLineDeviceList;
-import com.zkkc.prclient.main.entiy.LineDeviceListBean;
-import com.zkkc.prclient.main.entiy.QueryBean;
+import com.zkkc.prclient.main.callback.IQueryTower;
+import com.zkkc.prclient.main.entiy.TowerListBean;
 
-import static com.zkkc.prclient.PRCConstant.USER_LINE_DEVICE_LIST;
+import static com.zkkc.prclient.PRCConstant.TOWER_LIST;
 import static com.zkkc.prclient.login.act.LoginAct.ACCESSTOKEN;
 
 /**
- * Created by ShiJunRan on 2019/5/6
- * 首页Model
+ * Created by ShiJunRan on 2019/5/9
  */
-public class HomeModel extends BaseModel {
-    /**
-     * 查询线路和设备列表
-     */
-    public void queryLineDeviceList(final IQueryLineDeviceList callback) {
-        String user_name = SPUtils.getInstance().getString("USER_NAME");
-        QueryBean queryBean = new QueryBean();
-        queryBean.setUsername(user_name);
-        ViseHttp.GET(USER_LINE_DEVICE_LIST)
+public class TowerShowModel {
+
+    public void queryTowerList(String mediaId, String towerNum, int page, int limit, final IQueryTower callback) {
+        ViseHttp.GET(TOWER_LIST)
                 .addHeader("accessToken", SPUtils.getInstance().getString(ACCESSTOKEN))
-                .request(new ACallback<LineDeviceListBean>() {
+                .addParam("mediaId", mediaId)
+                .addParam("towerNum", towerNum)
+                .addParam("page", "")
+                .addParam("limit", "")
+                .request(new ACallback<TowerListBean>() {
                     @Override
-                    public void onSuccess(LineDeviceListBean data) {
+                    public void onSuccess(TowerListBean data) {
                         if (data != null) {
                             if (data.getCode() == 200) {
                                 callback.onSuccess(data);
@@ -45,5 +40,6 @@ public class HomeModel extends BaseModel {
                         callback.onFailure(errMsg);
                     }
                 });
+
     }
 }

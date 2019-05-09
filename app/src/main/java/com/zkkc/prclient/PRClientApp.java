@@ -61,8 +61,8 @@ public class PRClientApp extends Application {
         //ViseHttp初始化
         HashMap<String, String> globalHeaders = new HashMap<String, String>();
         globalHeaders.put("Content-Type", "application/json");
-        globalHeaders.put("accessToken", SPUtils.getInstance().getString(ACCESSTOKEN));
-        LogUtils.i("accessToken",SPUtils.getInstance().getString(ACCESSTOKEN));
+//        globalHeaders.put("accessToken", SPUtils.getInstance().getString(ACCESSTOKEN));
+//        LogUtils.i("accessToken",SPUtils.getInstance().getString(ACCESSTOKEN));
 //        HashMap<String, String> globalParams = new HashMap<String, String>();
 //        globalParams.put("accessToken", SPUtils.getInstance().getString(ACCESSTOKEN));//app类型
         ViseHttp.init(this);

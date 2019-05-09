@@ -43,9 +43,6 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(getLayoutId());
         ButterKnife.bind(this);
-        if (isRegisterBus) {
-            EventBus.getDefault().register(this);
-        }
         mContext = this;
         if (presenter == null) {
             presenter = createPresenter();
@@ -61,12 +58,6 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
 
     }
 
-    private boolean isRegisterBus = false;
-
-    public boolean isDoEventBus(boolean is) {
-        this.isRegisterBus = is;
-        return isRegisterBus;
-    }
 
     @Override
     protected void onDestroy() {
@@ -75,9 +66,6 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
             outDialog = null;
         }
         super.onDestroy();
-        if (isRegisterBus) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
     //由子类指定具体类型

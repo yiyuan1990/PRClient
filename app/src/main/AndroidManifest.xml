@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zkkc.prclient">
+
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
@@ -54,7 +55,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.act.WelcomeAct"
+        <activity
+            android:name=".login.act.WelcomeAct"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="reverseLandscape">
             <intent-filter>
@@ -71,12 +73,18 @@
             android:name=".main.act.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="reverseLandscape" />
+        <activity
+            android:name=".main.act.TowerShowAct"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="reverseLandscape" />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="rYfAARRkcU9HQuzxZIcz6epxnju2A7Qr" />
-        <service android:name="com.baidu.location.f"
+        <service
+            android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"/>
+            android:process=":remote" />
     </application>
 
 </manifest>

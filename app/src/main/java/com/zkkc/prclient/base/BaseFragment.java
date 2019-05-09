@@ -32,9 +32,6 @@ public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
         unbinder = ButterKnife.bind(this, view);
-        if (isRegisterBus) {
-            EventBus.getDefault().register(this);
-        }
         mContext = getActivity();
         if (presenter == null) {
             presenter = createPresenter();
@@ -58,12 +55,6 @@ public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V
 
     public abstract void init();
 
-    private boolean isRegisterBus = false;
-
-    public boolean isDoEventBus(boolean is) {
-        this.isRegisterBus = is;
-        return isRegisterBus;
-    }
 
     @Override
     public void onDestroyView() {
@@ -73,9 +64,6 @@ public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V
         }
         if (unbinder != null) {
             unbinder.unbind();
-        }
-        if (isRegisterBus) {
-            EventBus.getDefault().unregister(this);
         }
     }
 
