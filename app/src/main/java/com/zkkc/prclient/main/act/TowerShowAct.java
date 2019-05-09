@@ -3,6 +3,8 @@ package com.zkkc.prclient.main.act;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,7 +44,7 @@ public class TowerShowAct extends BaseActivity<TowerShowContract.View, TowerShow
 
     MediaListBean.ListBean bean;
     TowerContentAd towerContentAd;
-    List<TowerAdBean> mList = new ArrayList<>();
+    List<TowerAdBean> mList;
     @BindView(R.id.ivBack)
     ImageView ivBack;
 
@@ -91,13 +93,28 @@ public class TowerShowAct extends BaseActivity<TowerShowContract.View, TowerShow
             }
         });
 
+        etTower.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String towerStr = etTower.getText().toString().trim();
+                getPresenter().queryTowerList(bean.getId(), towerStr, 1, 1000);
+            }
+        });
     }
 
 
     @Override
     public void queryTowerListSuccess(TowerListBean b) {
         List<TowerListBean.DataBean> data = b.getData();
+        mList = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             TowerAdBean tab = new TowerAdBean();
             tab.setTowerNum(data.get(i).getTowerNum());
