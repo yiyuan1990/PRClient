@@ -1,5 +1,6 @@
 package com.zkkc.prclient.main.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -89,7 +90,8 @@ public class TowerShowAct extends BaseActivity<TowerShowContract.View, TowerShow
         towerContentAd.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                EventBus.getDefault().postSticky(mList.get(position));
+                startActivity(new Intent(TowerShowAct.this, TowerPicAct.class));
             }
         });
 
@@ -117,10 +119,13 @@ public class TowerShowAct extends BaseActivity<TowerShowContract.View, TowerShow
         mList = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             TowerAdBean tab = new TowerAdBean();
+            tab.setTid(data.get(i).getTid());
             tab.setTowerNum(data.get(i).getTowerNum());
             tab.setDeviceName(bean.getDeviceName());
             tab.setLineName(bean.getLineName());
             tab.setMdate(bean.getDate());
+            tab.setBaseUrl(bean.getBaseUrl());
+            tab.setPlayUrl(bean.getPlayUrl());
             mList.add(tab);
         }
         towerContentAd.setNewData(mList);

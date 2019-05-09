@@ -19,26 +19,38 @@
             android:padding="@dimen/dp_5"
             android:src="@mipmap/back_white" />
 
-        <EditText
-            android:id="@+id/etTower"
-            android:layout_width="@dimen/dp_200"
+        <TextView
+            android:id="@+id/tvTabName"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_30"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginLeft="@dimen/dp_30"
             android:layout_toRightOf="@id/ivBack"
-            android:background="@drawable/edit_shape"
-            android:hint="请输入要搜索的塔号"
-            android:maxLines="1"
-            android:textSize="@dimen/sp_12" />
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="normal" />
+        <!--<EditText-->
+        <!--android:id="@+id/etTower"-->
+        <!--android:layout_width="@dimen/dp_200"-->
+        <!--android:layout_height="@dimen/dp_30"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginLeft="@dimen/dp_40"-->
+        <!--android:layout_toRightOf="@id/ivBack"-->
+        <!--android:background="@drawable/edit_shape"-->
+        <!--android:hint="请输入要搜索的塔号"-->
+        <!--android:maxLines="1"-->
+        <!--android:textSize="@dimen/sp_12" />-->
 
-        <ImageView
-            android:layout_width="@dimen/dp_15"
-            android:layout_height="@dimen/dp_15"
-            android:layout_alignLeft="@id/etTower"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:src="@mipmap/icon_query" />
+        <!--<ImageView-->
+        <!--android:layout_width="@dimen/dp_15"-->
+        <!--android:layout_height="@dimen/dp_15"-->
+        <!--android:layout_alignLeft="@id/etTower"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginLeft="@dimen/dp_10"-->
+        <!--android:src="@mipmap/icon_query" />-->
     </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvTower"

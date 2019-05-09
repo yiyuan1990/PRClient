@@ -60,7 +60,7 @@ public class MediaListBean {
          * lineName : 12312
          * deviceName : 设备005
          */
-
+        private String playUrl;
         private String id;
         private int isSelected;
         private String baseUrl;
@@ -69,6 +69,14 @@ public class MediaListBean {
         private String date;
         private String lineName;
         private String deviceName;
+
+        public String getPlayUrl() {
+            return playUrl;
+        }
+
+        public void setPlayUrl(String playUrl) {
+            this.playUrl = playUrl;
+        }
 
         public int getIsSelected() {
             return isSelected;

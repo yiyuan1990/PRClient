@@ -65,6 +65,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/lla"
         android:paddingLeft="@dimen/dp_40"
+        android:paddingTop="@dimen/dp_10"
         android:paddingRight="@dimen/dp_40">
 
     </android.support.v7.widget.RecyclerView>

@@ -113,6 +113,9 @@ public class PicFragment extends BaseFragment<PicContract.View, PicContract.Pres
     public void queryMediaListSuccess(MediaListBean b) {
         tvNoData.setVisibility(View.GONE);
         mList = b.getList();
+        for (MediaListBean.ListBean lb:mList) {
+            lb.setPlayUrl(b.getPlayUrl());
+        }
         picContentAd.setNewData(mList);
     }
 

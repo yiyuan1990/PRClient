@@ -77,6 +77,9 @@
             android:name=".main.act.TowerShowAct"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="reverseLandscape" />
+        <activity android:name=".main.act.TowerPicAct"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="reverseLandscape"/>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
