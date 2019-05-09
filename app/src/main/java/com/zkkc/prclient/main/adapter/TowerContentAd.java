@@ -28,7 +28,7 @@ public class TowerContentAd extends BaseQuickAdapter<TowerAdBean, BaseViewHolder
         helper.setText(R.id.tvTowerNo, "塔号"+item.getTowerNum())
                 .setText(R.id.tv, item.getLineName())
                 .setText(R.id.tv2, item.getDeviceName())
-                .setText(R.id.tv3, TimeUtils.millis2String(Long.parseLong(item.getMdate()),
-                        new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)) );
+                .setText(R.id.tv3, TimeUtils.millis2String(Long.parseLong(item.getMdate())*1000,
+                        new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)) );
     }
 }

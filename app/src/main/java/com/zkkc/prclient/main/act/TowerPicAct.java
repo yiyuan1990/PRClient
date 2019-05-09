@@ -1,5 +1,6 @@
 package com.zkkc.prclient.main.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.vise.xsnow.http.ViseHttp;
 import com.vise.xsnow.http.callback.ACallback;
 import com.zkkc.prclient.R;
@@ -58,9 +60,9 @@ public class TowerPicAct extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void mEvent(final TowerAdBean tab) {
-        this.tab = tab;//TimeUtils.millis2String(Long.parseLong(tab.getMdate()),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH))
+        this.tab = tab;
         tvTabName.setText(tab.getLineName() + "      " + tab.getDeviceName() + "      塔号" + tab.getTowerNum()
-                + "      时间：" + TimeUtils.millis2String(Long.parseLong(tab.getMdate()),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)));
+                + "      时间：" + TimeUtils.millis2String(Long.parseLong(tab.getMdate()) * 1000, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)));
         mUrl = tab.getPlayUrl() + tab.getBaseUrl();
         ViseHttp.GET(TOWER_PICDATA)
                 .addHeader("accessToken", SPUtils.getInstance().getString(ACCESSTOKEN))
@@ -81,7 +83,6 @@ public class TowerPicAct extends BaseActivity {
                                     mList.add(psb);
                                 }
                                 adPic.setNewData(mList);
-
                             } else {
                                 ToastUtils.showShort(data.getMsg());
                             }
@@ -131,6 +132,13 @@ public class TowerPicAct extends BaseActivity {
         adPic = new AdPic(R.layout.item_tower_pic, mList);
         rvTower.setLayoutManager(new GridLayoutManager(this, 4));
         rvTower.setAdapter(adPic);
+        adPic.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                EventBus.getDefault().postSticky(mList.get(position));
+                startActivity(new Intent(TowerPicAct.this, PicShowAct.class));
+            }
+        });
     }
 
 

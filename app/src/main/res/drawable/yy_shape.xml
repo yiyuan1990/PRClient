@@ -30,7 +30,7 @@
                 android:left="0dp"
                 android:right="2dp"
                 android:top="2dp" />
-            <solid android:color="#26C0C0C0" />
+            <solid android:color="#33C0C0C0" />
             <corners android:radius="8dp" />
         </shape>
     </item>
@@ -41,7 +41,7 @@
                 android:left="0dp"
                 android:right="2dp"
                 android:top="2dp" />
-            <solid android:color="#33C0C0C0" />
+            <solid android:color="#40C0C0C0" />
             <corners android:radius="8dp" />
         </shape>
     </item>
