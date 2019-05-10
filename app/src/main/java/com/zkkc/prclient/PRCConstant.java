@@ -7,9 +7,9 @@ public class PRCConstant {
     //本地环境
 //    public static final String BASE_URL = "http://172.16.1.228:8182/";
     //测试环境
-    public static final String BASE_URL = "http://172.16.1.152:8182/";
+//    public static final String BASE_URL = "http://172.16.1.152:8182/";
     //生产环境
-//    public static final String BASE_URL = "http://120.79.132.29:8182/";
+    public static final String BASE_URL = "http://120.79.132.29:8182/";
 
     /**
      * 登录

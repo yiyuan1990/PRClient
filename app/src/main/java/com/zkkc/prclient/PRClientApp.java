@@ -2,6 +2,8 @@ package com.zkkc.prclient;
 
 import android.app.Application;
 
+import com.baidu.mapapi.CoordType;
+import com.baidu.mapapi.SDKInitializer;
 import com.luoxudong.app.threadpool.ThreadPoolHelp;
 import com.shuyu.gsyvideoplayer.player.IjkPlayerManager;
 import com.shuyu.gsyvideoplayer.player.PlayerFactory;
@@ -11,6 +13,7 @@ import com.vise.xsnow.common.ViseConfig;
 import com.vise.xsnow.http.ViseHttp;
 import com.vise.xsnow.http.interceptor.HttpLogInterceptor;
 import com.vise.xsnow.http.interceptor.NoCacheInterceptor;
+import com.zkkc.prclient.main.utils.LocationService;
 
 import java.io.File;
 import java.util.HashMap;
@@ -28,6 +31,7 @@ import static com.zkkc.prclient.PRCConstant.BASE_URL;
 public class PRClientApp extends Application {
     private static PRClientApp mInstance;
     public static ExecutorService threadPool;
+    public static LocationService locationService;
 
     // 单例模式中获取唯一的ExitApplication 实例
     public static PRClientApp getInstance() {
@@ -50,8 +54,8 @@ public class PRClientApp extends Application {
         threadPool = ThreadPoolHelp.Builder
                 .cached()
                 .builder();
-        initVideoPlayer();//GSYVideo全局设置
         initBaiDu();//百度地图
+        initVideoPlayer();//GSYVideo全局设置
         initHttp();//ViseHttp初始化
     }
 
@@ -109,7 +113,13 @@ public class PRClientApp extends Application {
     }
 
     private void initBaiDu() {
+        //在使用SDK各组件之前初始化context信息，传入ApplicationContext
+        SDKInitializer.initialize(this);
+        //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
+        //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
+        SDKInitializer.setCoordType(CoordType.BD09LL);
 
+        locationService = new LocationService(getApplicationContext());
     }
 
     /**

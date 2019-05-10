@@ -97,6 +97,15 @@
             android:name=".main.act.VideoShowAct"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="reverseLandscape" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="rYfAARRkcU9HQuzxZIcz6epxnju2A7Qr" />
+        <!-- 声明service组件 -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
     </application>
 
 </manifest>
