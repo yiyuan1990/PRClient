@@ -35,7 +35,7 @@ public class PRCConstant {
     /**
      * 获取视频列表
      */
-    public static final String tower_videoData = "tower/videoData";
+    public static final String TOWER_VIDEODATA = "tower/videoData";
 
 
 }

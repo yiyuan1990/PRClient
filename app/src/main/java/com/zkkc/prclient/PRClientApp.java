@@ -2,15 +2,13 @@ package com.zkkc.prclient;
 
 import android.app.Application;
 
-import com.baidu.mapapi.CoordType;
-import com.baidu.mapapi.SDKInitializer;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.luoxudong.app.threadpool.ThreadPoolHelp;
+import com.shuyu.gsyvideoplayer.player.IjkPlayerManager;
+import com.shuyu.gsyvideoplayer.player.PlayerFactory;
+import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.vise.utils.assist.SSLUtil;
 import com.vise.xsnow.common.ViseConfig;
 import com.vise.xsnow.http.ViseHttp;
-import com.vise.xsnow.http.core.ApiCookie;
 import com.vise.xsnow.http.interceptor.HttpLogInterceptor;
 import com.vise.xsnow.http.interceptor.NoCacheInterceptor;
 
@@ -21,7 +19,6 @@ import java.util.concurrent.ExecutorService;
 import okhttp3.Cache;
 
 import static com.zkkc.prclient.PRCConstant.BASE_URL;
-import static com.zkkc.prclient.login.act.LoginAct.ACCESSTOKEN;
 
 
 /**
@@ -53,12 +50,12 @@ public class PRClientApp extends Application {
         threadPool = ThreadPoolHelp.Builder
                 .cached()
                 .builder();
-        //在使用SDK各组件之前初始化context信息，传入ApplicationContext
-        SDKInitializer.initialize(this);
-        //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
-        //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
-        SDKInitializer.setCoordType(CoordType.BD09LL);
-        //ViseHttp初始化
+        initVideoPlayer();//GSYVideo全局设置
+        initBaiDu();//百度地图
+        initHttp();//ViseHttp初始化
+    }
+
+    private void initHttp() {
         HashMap<String, String> globalHeaders = new HashMap<String, String>();
         globalHeaders.put("Content-Type", "application/json");
 //        globalHeaders.put("accessToken", SPUtils.getInstance().getString(ACCESSTOKEN));
@@ -111,5 +108,44 @@ public class PRClientApp extends Application {
         ;
     }
 
+    private void initBaiDu() {
+
+    }
+
+    /**
+     * GSYVideo全局设置
+     */
+    public void initVideoPlayer() {
+        //videoplayer
+        //EXOPlayer内核，支持格式更多
+//        PlayerFactory.setPlayManager(Exo2PlayerManager.class);
+        //系统内核模式
+//        PlayerFactory.setPlayManager(SystemPlayerManager.class);
+        //ijk内核，默认模式
+        PlayerFactory.setPlayManager(IjkPlayerManager.class);
+
+        //exo缓存模式，支持m3u8，只支持exo
+//        CacheFactory.setCacheManager(ExoPlayerCacheManager.class);
+        //代理缓存模式，支持所有模式，不支持m3u8等，默认
+//        CacheFactory.setCacheManager(ProxyCacheManager.class);
+        //切换渲染模式
+        GSYVideoType.setShowType(GSYVideoType.SCREEN_MATCH_FULL);
+//    //默认显示比例
+//        GSYVideoType.SCREEN_TYPE_DEFAULT = 0;
+//    //16:9
+//        GSYVideoType.SCREEN_TYPE_16_9 = 1;
+//    //4:3
+//        GSYVideoType.SCREEN_TYPE_4_3 = 2;
+//    //全屏裁减显示，为了显示正常 CoverImageView 建议使用FrameLayout作为父布局
+//        GSYVideoType.SCREEN_TYPE_FULL = 4;
+//        //全屏拉伸显示，使用这个属性时，surface_container建议使用FrameLayout
+//        GSYVideoType.SCREEN_MATCH_FULL = -4;
+//切换绘制模式
+//        GSYVideoType.setRenderType(GSYVideoType.SUFRACE);
+        GSYVideoType.setRenderType(GSYVideoType.GLSURFACE);
+//        GSYVideoType.setRenderType(GSYVideoType.TEXTURE);
+
+        GSYVideoType.enableMediaCodecTexture();
+    }
 
 }

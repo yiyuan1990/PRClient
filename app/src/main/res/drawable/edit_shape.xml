@@ -4,7 +4,7 @@
     <solid android:color="@color/light_white" />
     <padding
         android:bottom="@dimen/dp_2"
-        android:left="@dimen/dp_50"
+        android:left="@dimen/dp_35"
         android:right="@dimen/dp_5"
         android:top="@dimen/dp_2" />
 </shape>

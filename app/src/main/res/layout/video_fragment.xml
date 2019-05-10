@@ -1,13 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/light_white">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/lla"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/light_black"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设备名称"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+
+        <EditText
+            android:id="@+id/etDevice"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_30"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@drawable/edit_shape_c"
+            android:hint="请输入设备名称"
+            android:maxLines="1"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="线路名称"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+
+        <EditText
+            android:id="@+id/etLine"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_30"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@drawable/edit_shape_c"
+            android:hint="请输入线路名称"
+            android:maxLines="1"
+            android:textSize="@dimen/sp_12" />
+
+        <Button
+            android:id="@+id/btnQuery"
+            android:layout_width="@dimen/dp_75"
+            android:layout_height="@dimen/dp_30"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:background="@drawable/btn_out_b"
+            android:text="查询"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+    <!--内容-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvVideo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/lla"
+        android:paddingLeft="@dimen/dp_40"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_40">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tvNoData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lla"
         android:gravity="center"
-        android:text="video"
-        android:textSize="@dimen/sp_25"
+        android:text="暂无数据"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_18"
         android:textStyle="bold" />
 </RelativeLayout>

@@ -27,6 +27,6 @@ public class PicContentAd extends BaseQuickAdapter<MediaListBean.ListBean, BaseV
         helper.setText(R.id.tv, item.getLineName())
                 .setText(R.id.tv2, item.getDeviceName())
                 .setText(R.id.tv3,TimeUtils.millis2String(Long.parseLong(item.getDate())*1000,
-                        new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)));
+                        new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH)));
     }
 }

@@ -62,7 +62,7 @@ public class TowerPicAct extends BaseActivity {
     public void mEvent(final TowerAdBean tab) {
         this.tab = tab;
         tvTabName.setText(tab.getLineName() + "      " + tab.getDeviceName() + "      塔号" + tab.getTowerNum()
-                + "      时间：" + TimeUtils.millis2String(Long.parseLong(tab.getMdate()) * 1000, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)));
+                + "      时间：" + TimeUtils.millis2String(Long.parseLong(tab.getMdate()) * 1000, new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH)));
         mUrl = tab.getPlayUrl() + tab.getBaseUrl();
         ViseHttp.GET(TOWER_PICDATA)
                 .addHeader("accessToken", SPUtils.getInstance().getString(ACCESSTOKEN))

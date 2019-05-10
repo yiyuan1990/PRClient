@@ -6,6 +6,24 @@ package com.zkkc.prclient.main.entiy;
 public class PicShowBean {
     private String picUrl;
     private String picName;
+    private boolean isErr;
+
+    @Override
+    public String toString() {
+        return "PicShowBean{" +
+                "picUrl='" + picUrl + '\'' +
+                ", picName='" + picName + '\'' +
+                ", isErr=" + isErr +
+                '}';
+    }
+
+    public boolean isErr() {
+        return isErr;
+    }
+
+    public void setErr(boolean err) {
+        isErr = err;
+    }
 
     public String getPicUrl() {
         return picUrl;

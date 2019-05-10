@@ -10,6 +10,7 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="orange">#ff732b</color>
+    <color name="light_orange">#be4a0e</color>
     <color name="blue">#1F50EB</color>
     <color name="light_white">#f5f5f5</color>
     <color name="gray">#666666</color>
@@ -24,6 +25,7 @@
     <color name="tip_e">#999999</color>
 
     <color name="popup_text_color">#597a96</color>
+
 
 
 </resources>

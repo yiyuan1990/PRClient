@@ -8,4 +8,5 @@ import com.zkkc.prclient.base.BaseModel;
  */
 public class VideoModel extends BaseModel {
 
+
 }

@@ -10,19 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.LocationClient;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BaiduMapOptions;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.LogoPosition;
-import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.OverlayOptions;
-import com.baidu.mapapi.model.LatLng;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.zkkc.prclient.R;
@@ -65,8 +52,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     private ArrayList<MultiItemEntity> mList;
     HomePopupAdapter homePopupAdapter;
 
-    BaiduMap mBaiduMap;
-    MapView mMapView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,26 +64,20 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mMapView != null) {
-            mMapView.onDestroy();
-        }
+
         unbinder.unbind();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (mMapView != null) {
-            mMapView.onResume();
-        }
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (mMapView != null) {
-            mMapView.onPause();
-        }
+
     }
 
     @Override
@@ -128,18 +108,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
      * 百度地图配置
      */
     private void initBaiDuMap() {
-        MapStatus.Builder builder = new MapStatus.Builder();
-        builder.zoom(15.0f);
-        final BaiduMapOptions options = new BaiduMapOptions();
-        options.logoPosition(LogoPosition.logoPostionRightTop)
-                .scaleControlEnabled(false)
-                .zoomControlsEnabled(false)
-                .compassEnabled(false)
-                .mapStatus(builder.build());
-        mMapView = new MapView(mContext, options);
-        llMap.addView(mMapView);
-        mBaiduMap = mMapView.getMap();
-        mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+
 
     }
 

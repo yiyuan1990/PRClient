@@ -85,14 +85,18 @@
             android:name=".main.act.PicShowAct"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="reverseLandscape" />
-
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="rYfAARRkcU9HQuzxZIcz6epxnju2A7Qr" />
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" />
+        <activity
+            android:name=".main.act.VideoTowerShowAct"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="reverseLandscape" />
+        <activity
+            android:name=".main.act.TowerVideoAct"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="reverseLandscape" />
+        <activity
+            android:name=".main.act.VideoShowAct"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="reverseLandscape" />
     </application>
 
 </manifest>
