@@ -16,20 +16,26 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.Overlay;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zkkc.prclient.PRClientApp;
 import com.zkkc.prclient.R;
 import com.zkkc.prclient.base.BaseFragment;
-import com.zkkc.prclient.main.adapter.HomePopupAdapter;
+import com.zkkc.prclient.main.adapter.AdHomePopup;
+import com.zkkc.prclient.main.adapter.AdHomePopupDevice;
 import com.zkkc.prclient.main.contract.HomeContract;
 import com.zkkc.prclient.main.entiy.LineDeviceListBean;
-import com.zkkc.prclient.main.entiy.RvDevice;
-import com.zkkc.prclient.main.entiy.RvLine;
 import com.zkkc.prclient.main.p.HomePresenter;
 import com.zkkc.prclient.main.utils.LocationService;
 
@@ -65,9 +71,10 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
 
     BaiduMap mBaiduMap;
     private LocationService locationService;
-    private ArrayList<MultiItemEntity> mList;
-    HomePopupAdapter homePopupAdapter;
 
+    private List<LineDeviceListBean.DataBean.LineListBean> lineList;
+    AdHomePopup adHomePopup;
+    AdHomePopupDevice adHomePopupDevice;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,10 +133,53 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
 
     @Override
     public void init() {
+        //百度地图初始设置
         initBaiDuMap();
-        homePopupAdapter = new HomePopupAdapter(mList);
+
+        adHomePopup = new AdHomePopup(R.layout.item_home_popup, lineList);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter(homePopupAdapter);
+        recyclerView.setAdapter(adHomePopup);
+
+        adHomePopup.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ToastUtils.showShort("点击" + position);
+                List<LineDeviceListBean.DataBean.LineListBean> list = adapter.getData();
+                RecyclerView rvDevice = (RecyclerView) adHomePopup.getViewByPosition(recyclerView, position, R.id.rvDevice);
+                if (rvDevice.getAdapter() == null) {
+                    adHomePopupDevice = new AdHomePopupDevice(R.layout.item_home_popup_a, list.get(position).getDeviceList());
+                    rvDevice.setLayoutManager(new LinearLayoutManager(mContext));
+                    rvDevice.setAdapter(adHomePopupDevice);
+                    adHomePopupDevice.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            ToastUtils.showShort("设备-" + position);
+
+                        }
+                    });
+                    recyclerView.scrollToPosition(position);
+                } else {
+                    rvDevice.setAdapter(null);
+                }
+                //当前线路的Line绘制
+                List<LineDeviceListBean.DataBean.LineListBean.TowerListBean> towerList = list.get(position).getTowerList();
+                List<LatLng> points = new ArrayList<LatLng>();
+                for (int i = 0; i < towerList.size(); i++) {
+                    List<Double> gps = towerList.get(i).getGps();
+                    Double aDouble = gps.get(1);
+                    Double aDouble2 = gps.get(0);
+                    LatLng latLng = new LatLng(aDouble2, aDouble);
+                    points.add(latLng);
+                }
+                addDeviceLine(points);
+
+                String lat = list.get(position).getDeviceList().get(0).getLat();
+                String lng = list.get(position).getDeviceList().get(0).getLng();
+                mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(Double.valueOf(lat), Double.valueOf(lng))));
+
+            }
+        });
+
 
     }
 
@@ -139,8 +189,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     private void initBaiDuMap() {
         mBaiduMap = mMapView.getMap();
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(15));
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(23.168305,113.482192)));
+        mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(14));
+        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(23.112018, 113.329817)));
         //LocationService
         locationService = PRClientApp.locationService;
         LocationClientOption mOption = locationService.getDefaultLocationClientOption();
@@ -149,7 +199,76 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
         locationService.setLocationOption(mOption);
         locationService.registerListener(mListener);
         locationService.start();
+        //添加Line
+        //构建折线点坐标     113.329817,23.112018
+        LatLng p1 = new LatLng(22.999313, 113.336756);
+        LatLng p2 = new LatLng(23.023517, 113.328086);
+        LatLng p3 = new LatLng(23.112018, 113.329817);
+        LatLng p4 = new LatLng(23.13692, 113.328015);
+        List<LatLng> points = new ArrayList<LatLng>();
+        points.add(p1);
+        points.add(p2);
+        points.add(p3);
+        points.add(p4);
+        addDeviceLine(points);
 
+        //添加设备Maker
+        addDeviceMaker(22.999313, 113.336756, "AAA");
+        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            //marker被点击时回调的方法
+            //若响应点击事件，返回true，否则返回false
+            //默认返回false
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                ToastUtils.showShort(marker.getTitle());
+                return false;
+            }
+        });
+
+
+    }
+
+    /**
+     * 添加Maker
+     *
+     * @param lat
+     * @param lon
+     * @param title
+     */
+    private void addDeviceMaker(double lat, double lon, String title) {
+        //定义Maker坐标点
+//        LatLng point = new LatLng(23.166997, 113.481745);
+        LatLng point = new LatLng(lat, lon);
+        //构建Marker图标
+        BitmapDescriptor bitmap = BitmapDescriptorFactory
+                .fromResource(R.mipmap.maker_tower);
+        //构建MarkerOption，用于在地图上添加Marker
+        OverlayOptions option = new MarkerOptions()
+                .icon(bitmap)
+                .position(point)
+                .animateType(MarkerOptions.MarkerAnimateType.jump)
+                .perspective(true)
+                .draggable(false)
+                .title(title)
+                .flat(false);
+//在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(option);
+    }
+
+    /**
+     * 添加Line
+     *
+     * @param points
+     */
+    private void addDeviceLine(List<LatLng> points) {
+        //设置折线的属性
+        OverlayOptions mOverlayOptions = new PolylineOptions()
+                .width(10)
+                .color(0xFF8659ed)
+                .points(points);
+        //在地图上绘制折线
+        //mPloyline 折线对象
+        Overlay mPolyline = mBaiduMap.addOverlay(mOverlayOptions);
     }
 
     /***
@@ -238,7 +357,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
                     sb.append("\ndescribe : ");
                     sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
                 }
-                LogUtils.i("BDABSTRACTLOCATIONLISTENER",sb.toString());
+                LogUtils.i("BDABSTRACTLOCATIONLISTENER", sb.toString());
             }
         }
 
@@ -271,21 +390,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     @Override
     public void queryLineDeviceListSuccess(LineDeviceListBean b) {
         recyclerView.setVisibility(View.VISIBLE);
-        mList = new ArrayList<>();
-        LineDeviceListBean.DataBean data = b.getData();
-        List<LineDeviceListBean.DataBean.LineListBean> lineList = data.getLineList();
-        for (int i = 0; i < lineList.size(); i++) {
-            LineDeviceListBean.DataBean.LineListBean lineListBean = lineList.get(i);
-            RvLine line = new RvLine(lineListBean.getLineName(), "");
-            List<LineDeviceListBean.DataBean.LineListBean.DeviceListBean> deviceList = lineListBean.getDeviceList();
-            for (int j = 0; j < deviceList.size(); j++) {
-                LineDeviceListBean.DataBean.LineListBean.DeviceListBean deviceListBean = deviceList.get(j);
-                RvDevice device = new RvDevice(deviceListBean.getDeviceName());
-                line.addSubItem(device);
-            }
-            mList.add(line);
-        }
-        homePopupAdapter.setNewData(mList);
+        lineList = b.getData().getLineList();
+        adHomePopup.setNewData(lineList);
     }
 
     @Override
