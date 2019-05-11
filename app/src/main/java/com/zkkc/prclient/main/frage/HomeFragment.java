@@ -72,6 +72,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     BaiduMap mBaiduMap;
     private LocationService locationService;
 
+    private List<Integer> lineColors = new ArrayList<>();
     private List<LineDeviceListBean.DataBean.LineListBean> lineList;
     AdHomePopup adHomePopup;
     AdHomePopupDevice adHomePopupDevice;
@@ -135,7 +136,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     public void init() {
         //百度地图初始设置
         initBaiDuMap();
-
+        lineColors.add(R.mipmap.line_a);
+        lineColors.add(R.mipmap.line_b);
+        lineColors.add(R.mipmap.line_c);
+        lineColors.add(R.mipmap.line_d);
+        lineColors.add(R.mipmap.line_e);
         adHomePopup = new AdHomePopup(R.layout.item_home_popup, lineList);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adHomePopup);
@@ -146,19 +151,39 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
                 ToastUtils.showShort("点击" + position);
                 List<LineDeviceListBean.DataBean.LineListBean> list = adapter.getData();
                 RecyclerView rvDevice = (RecyclerView) adHomePopup.getViewByPosition(recyclerView, position, R.id.rvDevice);
+                ImageView ivLine = (ImageView) adHomePopup.getViewByPosition(recyclerView, position, R.id.ivLine);
+                ImageView ivMark = (ImageView) adHomePopup.getViewByPosition(recyclerView, position, R.id.ivMark);
                 if (rvDevice.getAdapter() == null) {
-                    adHomePopupDevice = new AdHomePopupDevice(R.layout.item_home_popup_a, list.get(position).getDeviceList());
-                    rvDevice.setLayoutManager(new LinearLayoutManager(mContext));
-                    rvDevice.setAdapter(adHomePopupDevice);
-                    adHomePopupDevice.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            ToastUtils.showShort("设备-" + position);
+                    //线路绘制颜色和角标显示
+                    ivMark.setImageResource(R.mipmap.icon_up);
+                    if (lineColors.size() > 0) {
+                        ivLine.setVisibility(View.VISIBLE);
+                        ivLine.setImageResource(lineColors.get(0));
+                        list.get(position).setIsSelected(lineColors.get(0));
+                        lineColors.remove(0);
+                        //设备列表
+                        adHomePopupDevice = new AdHomePopupDevice(R.layout.item_home_popup_a, list.get(position).getDeviceList());
+                        rvDevice.setLayoutManager(new LinearLayoutManager(mContext));
+                        rvDevice.setAdapter(adHomePopupDevice);
+                        adHomePopupDevice.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                ToastUtils.showShort("设备-" + position);
 
-                        }
-                    });
-                    recyclerView.scrollToPosition(position);
+                            }
+                        });
+                        recyclerView.scrollToPosition(position);
+                    } else {
+                        ToastUtils.showShort("最多同时显示5条线路");
+                    }
+
+
                 } else {
+                    //线路绘制颜色和角标显示
+                    ivMark.setImageResource(R.mipmap.icon_down);
+                    ivLine.setVisibility(View.GONE);
+                    lineColors.add(list.get(position).getIsSelected());
+                    //设备列表
                     rvDevice.setAdapter(null);
                 }
                 //当前线路的Line绘制
