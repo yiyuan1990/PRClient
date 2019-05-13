@@ -26,6 +26,12 @@
 
     <color name="popup_text_color">#597a96</color>
 
+    <color name="line_a">#8b1f5c</color>
+    <color name="line_b">#009900</color>
+    <color name="line_c">#ea6632</color>
+    <color name="line_d">#0377f3</color>
+    <color name="line_e">#d40000</color>
+
 
 
 </resources>
