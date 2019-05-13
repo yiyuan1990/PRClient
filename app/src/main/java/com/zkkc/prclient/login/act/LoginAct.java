@@ -65,6 +65,8 @@ public class LoginAct extends BaseActivity<LoginContract.View, LoginContract.Pre
     public void init() {
         //动态权限申请
         permissionsSet();
+        etName.clearFocus();
+        etPW.clearFocus();
         etName.setText(SPUtils.getInstance().getString(USER_NAME));
         etPW.setText(SPUtils.getInstance().getString(USER_PW));
         if (SPUtils.getInstance().getBoolean(USER_MCB)) {
@@ -103,7 +105,7 @@ public class LoginAct extends BaseActivity<LoginContract.View, LoginContract.Pre
                         SPUtils.getInstance().put(USER_PW, "");
                         SPUtils.getInstance().put(USER_MCB, false);
                     }
-                    pw = nameStr+pwStr ;
+                    pw = nameStr + pwStr;
                     pw = EncryptUtils.encryptMD5ToString(pw).toLowerCase();
                     LogUtils.i(pw);
                     LoginRequest b = new LoginRequest();

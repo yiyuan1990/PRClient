@@ -84,6 +84,7 @@ public class VideoTowerShowAct extends BaseActivity<TowerShowContract.View, Towe
 
     @Override
     public void init() {
+        etTower.clearFocus();
         towerContentAd = new TowerContentAd(R.layout.item_tower_video, mList);
         rvTower.setLayoutManager(new GridLayoutManager(this, 5));
         rvTower.setAdapter(towerContentAd);

@@ -189,18 +189,56 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
                 //当前线路的Line绘制
                 List<LineDeviceListBean.DataBean.LineListBean.TowerListBean> towerList = list.get(position).getTowerList();
                 List<LatLng> points = new ArrayList<LatLng>();
+                //创建OverlayOptions的集合
+                List<OverlayOptions> towerOptions = new ArrayList<OverlayOptions>();
                 for (int i = 0; i < towerList.size(); i++) {
                     List<Double> gps = towerList.get(i).getGps();
-                    Double aDouble = gps.get(1);
-                    Double aDouble2 = gps.get(0);
+                    Double aDouble = gps.get(0);
+                    Double aDouble2 = gps.get(1);
                     LatLng latLng = new LatLng(aDouble2, aDouble);
                     points.add(latLng);
+                    //构建Marker图标
+                    BitmapDescriptor bitmap = BitmapDescriptorFactory
+                            .fromResource(R.mipmap.maker_tower);
+                    //创建OverlayOptions属性
+                    OverlayOptions option = new MarkerOptions()
+                            .position(latLng)
+                            .icon(bitmap)
+                            .yOffset(30)
+                            .perspective(true)
+                            .draggable(false)
+                            .flat(false);
+                    towerOptions.add(option);
                 }
                 addDeviceLine(points);
+                //在地图上批量添加
+                mBaiduMap.addOverlays(towerOptions);
+                //当前设备Maker绘制
+                List<LineDeviceListBean.DataBean.LineListBean.DeviceListBean> deviceList = list.get(position).getDeviceList();
+                //创建OverlayOptions的集合
+                List<OverlayOptions> options = new ArrayList<OverlayOptions>();
+                //构建Marker图标
+                BitmapDescriptor bitmap = BitmapDescriptorFactory
+                        .fromResource(R.mipmap.device_maker_a);
+                for (int i = 0; i < deviceList.size(); i++) {
+                    LineDeviceListBean.DataBean.LineListBean.DeviceListBean deviceListBean = deviceList.get(i);
+                    LatLng point = new LatLng(Double.valueOf(deviceListBean.getLng()), Double.valueOf(deviceListBean.getLat()));
+                    //创建OverlayOptions属性
+                    OverlayOptions option = new MarkerOptions()
+                            .position(point)
+                            .icon(bitmap)
+                            .yOffset(30)
+                            .perspective(true)
+                            .draggable(false)
+                            .flat(false);
+                    options.add(option);
+                }
+                //在地图上批量添加
+                mBaiduMap.addOverlays(options);
 
                 String lat = list.get(position).getDeviceList().get(0).getLat();
                 String lng = list.get(position).getDeviceList().get(0).getLng();
-                mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(Double.valueOf(lat), Double.valueOf(lng))));
+                mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(Double.valueOf(lng), Double.valueOf(lat))));
 
             }
         });
@@ -214,7 +252,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     private void initBaiDuMap() {
         mBaiduMap = mMapView.getMap();
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(14));
+        mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(15));
         mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(23.112018, 113.329817)));
         //LocationService
         locationService = PRClientApp.locationService;
@@ -224,18 +262,18 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
         locationService.setLocationOption(mOption);
         locationService.registerListener(mListener);
         locationService.start();
-        //添加Line
-        //构建折线点坐标     113.329817,23.112018
-        LatLng p1 = new LatLng(22.999313, 113.336756);
-        LatLng p2 = new LatLng(23.023517, 113.328086);
-        LatLng p3 = new LatLng(23.112018, 113.329817);
-        LatLng p4 = new LatLng(23.13692, 113.328015);
-        List<LatLng> points = new ArrayList<LatLng>();
-        points.add(p1);
-        points.add(p2);
-        points.add(p3);
-        points.add(p4);
-        addDeviceLine(points);
+//        //添加Line
+//        //构建折线点坐标     113.329817,23.112018
+//        LatLng p1 = new LatLng(22.999313, 113.336756);
+//        LatLng p2 = new LatLng(23.023517, 113.328086);
+//        LatLng p3 = new LatLng(23.112018, 113.329817);
+//        LatLng p4 = new LatLng(23.13692, 113.328015);
+//        List<LatLng> points = new ArrayList<LatLng>();
+//        points.add(p1);
+//        points.add(p2);
+//        points.add(p3);
+//        points.add(p4);
+//        addDeviceLine(points);
 
         //添加设备Maker
         addDeviceMaker(22.999313, 113.336756, "AAA");
@@ -288,7 +326,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     private void addDeviceLine(List<LatLng> points) {
         //设置折线的属性
         OverlayOptions mOverlayOptions = new PolylineOptions()
-                .width(10)
+                .width(14)
                 .color(0xFF8659ed)
                 .points(points);
         //在地图上绘制折线
