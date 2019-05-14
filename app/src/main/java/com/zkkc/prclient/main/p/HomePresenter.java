@@ -4,10 +4,15 @@ import android.content.Context;
 import android.graphics.Color;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
+import com.zkkc.prclient.main.callback.IDeviceWebSocket;
 import com.zkkc.prclient.main.callback.IQueryLineDeviceList;
 import com.zkkc.prclient.main.contract.HomeContract;
 import com.zkkc.prclient.main.entiy.LineDeviceListBean;
 import com.zkkc.prclient.main.m.HomeModel;
+
+import java.util.List;
+
+import okhttp3.WebSocket;
 
 
 /**
@@ -38,6 +43,31 @@ public class HomePresenter extends HomeContract.Presenter {
             public void onFailure(String strErr) {
                 dismissBaseProDialog();
                 getView().queryLineDeviceListFailure(strErr);
+            }
+        });
+    }
+
+    @Override
+    public void deviceWebSocket(List<String> deviceNumList) {
+        model.deviceWebSocket(deviceNumList, new IDeviceWebSocket() {
+            @Override
+            public void onWebSocketSuccess(WebSocket webSocket) {
+                getView().onWebSocketSuccess(webSocket);
+            }
+
+            @Override
+            public void onWebSocketMessage(String text,int size) {
+                getView().onWebSocketMessage(text,size);
+            }
+
+            @Override
+            public void onWebSocketClosed() {
+                getView().onWebSocketClosed();
+            }
+
+            @Override
+            public void onWebSocketFailure(String strErr) {
+                getView().onWebSocketFailure(strErr);
             }
         });
     }

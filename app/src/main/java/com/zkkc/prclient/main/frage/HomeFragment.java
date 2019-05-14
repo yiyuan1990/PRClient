@@ -1,5 +1,6 @@
 package com.zkkc.prclient.main.frage;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -29,9 +31,14 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.xuhao.didi.socket.client.sdk.OkSocket;
+import com.xuhao.didi.socket.client.sdk.client.ConnectionInfo;
+import com.xuhao.didi.socket.client.sdk.client.action.SocketActionAdapter;
+import com.xuhao.didi.socket.client.sdk.client.connection.IConnectionManager;
 import com.zkkc.prclient.PRClientApp;
 import com.zkkc.prclient.R;
 import com.zkkc.prclient.base.BaseFragment;
@@ -40,8 +47,10 @@ import com.zkkc.prclient.main.adapter.AdHomePopupDevice;
 import com.zkkc.prclient.main.contract.HomeContract;
 import com.zkkc.prclient.main.entiy.AllShowMarkerBean;
 import com.zkkc.prclient.main.entiy.LineDeviceListBean;
+import com.zkkc.prclient.main.entiy.WebDeviceBean;
 import com.zkkc.prclient.main.p.HomePresenter;
 import com.zkkc.prclient.main.utils.LocationService;
+import com.zkkc.prclient.service.UpdateMarkerService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,11 +59,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import okhttp3.WebSocket;
 
 /**
  * Created by ShiJunRan on 2019/5/6
@@ -86,6 +99,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     AdHomePopup adHomePopup;
     AdHomePopupDevice adHomePopupDevice;
 
+    WebSocket mWebSocket;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,11 +110,15 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
 
     @Override
     public void onDestroyView() {
+        if (mWebSocket != null) {
+            mWebSocket.close(1000, null);
+        }
         super.onDestroyView();
         if (mMapView != null) {
             mMapView.onDestroy();
         }
         unbinder.unbind();
+
     }
 
     @Override
@@ -240,12 +258,15 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
             BitmapDescriptor bitmap = BitmapDescriptorFactory
                     .fromResource(R.mipmap.marker_tower);
             //创建OverlayOptions属性
+            Bundle bundle = new Bundle();
+            bundle.putString("deviceNum", "tower");
             OverlayOptions option = new MarkerOptions()
                     .position(latLng)
                     .icon(bitmap)
                     .yOffset(25)
                     .perspective(true)
                     .draggable(false)
+                    .extraInfo(bundle)
                     .flat(false);
             towerOptions.add(option);
         }
@@ -265,6 +286,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
         BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_a);
         for (LineDeviceListBean.DataBean.LineListBean.DeviceListBean dlb : deviceList) {
             LatLng latLng = new LatLng(Double.valueOf(dlb.getLng()), Double.valueOf(dlb.getLat()));
+            Bundle bundle = new Bundle();
+            bundle.putString("deviceNum", dlb.getDeviceNum());
             //创建OverlayOptions属性
             OverlayOptions option = new MarkerOptions()
                     .position(latLng)
@@ -272,7 +295,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
                     .yOffset(25)
                     .perspective(true)
                     .draggable(false)
-                    .flat(false);
+                    .flat(false)
+                    .extraInfo(bundle);
             deviceOptions.add(option);
         }
         //在地图上批量添加
@@ -347,9 +371,10 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     }
 
     /**
-     * 添加Maker
+     * 实时改变Maker状态
      */
-    private void addDeviceMaker() {
+    private void doDeviceMaker() {
+
 
     }
 
@@ -360,8 +385,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
      */
     private Overlay addDeviceLine(List<LatLng> points, int color) {
         //设置折线的属性
+        Bundle bundle = new Bundle();
+        bundle.putString("deviceNum", "line");
         OverlayOptions mOverlayOptions = new PolylineOptions()
                 .width(14)
+                .extraInfo(bundle)
                 .color(ColorUtils.getColor(color))
                 .points(points);
         //在地图上绘制折线
@@ -491,10 +519,193 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
         recyclerView.setVisibility(View.VISIBLE);
         lineList = b.getData().getLineList();
         adHomePopup.setNewData(lineList);
+        List<String> strings = new ArrayList<>();
+        for (LineDeviceListBean.DataBean.LineListBean llb : lineList) {
+            List<LineDeviceListBean.DataBean.LineListBean.DeviceListBean> deviceList = llb.getDeviceList();
+            for (LineDeviceListBean.DataBean.LineListBean.DeviceListBean dlb : deviceList) {
+                strings.add(dlb.getDeviceNum());
+            }
+        }
+        getPresenter().deviceWebSocket(strings);
     }
 
     @Override
     public void queryLineDeviceListFailure(String strErr) {
         ToastUtils.showShort(strErr);
+    }
+
+    @Override
+    public void onWebSocketSuccess(WebSocket webSocket) {
+        ToastUtils.showShort("WebSocket连接成功");
+        LogUtils.d("UpdateMarkerService", "Thread id is " + Thread.currentThread().getId());
+        mWebSocket = webSocket;
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (markerBeanList.size() > 0 && webDeviceBeans.size() > 0) {
+                    for (WebDeviceBean wdb : webDeviceBeans) {
+                        WebDeviceBean.DataBean data = wdb.getData();
+                        String serialNum = data.getSerialNum();//序列号
+                        int state = data.getState();//状态
+                        WebDeviceBean.DataBean.GpsBean gps = data.getGps();//GPS
+                        int balance = data.getBalance();//平衡状态
+                        int humidity = data.getHumidity();//温度 -25<正常>80
+                        int temperature = data.getTemperature();//湿度 正常<65
+
+                        for (AllShowMarkerBean asmb : markerBeanList) {
+                            List<Overlay> overlays = asmb.getOverlays();
+                            if (overlays.size() > 0) {
+                                for (Overlay ol : overlays) {
+                                    String deviceNum = ol.getExtraInfo().getString("deviceNum");
+                                    if (serialNum.equals(deviceNum)) {
+//                                   机器状态 0手动 1自动 2配置 3过障 4充电 5低电 6信采集 7待机 8数据上传 9.设备离线
+                                        Marker marker = (Marker) ol;
+                                        BitmapDescriptor bitmap;
+                                        switch (state) {
+                                            case 9://设备离线
+                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_e);
+                                                marker.setIcon(bitmap);
+                                                break;
+                                            case 0://巡检
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                            case 6:
+                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_c);
+                                                marker.setIcon(bitmap);
+                                                break;
+                                            case 4://充电
+                                            case 8:
+                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_a);
+                                                marker.setIcon(bitmap);
+                                                break;
+                                            case 7://待机
+                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_b);
+                                                marker.setIcon(bitmap);
+                                                break;
+                                            case 5://低电（报警）
+                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_d);
+                                                marker.setIcon(bitmap);
+                                                break;
+                                        }
+//                                        int balance = data.getBalance();//平衡状态
+//                                        int humidity = data.getHumidity();//温度 -25<正常>80
+//                                        int temperature = data.getTemperature();//湿度 正常<65
+                                        if (balance > 0 || humidity < -25 || humidity > 80 || temperature > 65) {
+                                            bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_d);
+                                            marker.setIcon(bitmap);
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+
+            }
+        }, 1000, 1000);
+
+//
+//        PRClientApp.timingThreadPool.scheduleWithFixedDelay(new Runnable() {
+//            @Override
+//            public void run() {
+//                LogUtils.i("timingThreadPool");
+//                if (markerBeanList.size() > 0 && webDeviceBeans.size() > 0) {
+//                    for (WebDeviceBean wdb : webDeviceBeans) {
+//                        WebDeviceBean.DataBean data = wdb.getData();
+//                        String serialNum = data.getSerialNum();//序列号
+//                        int state = data.getState();//状态
+//                        WebDeviceBean.DataBean.GpsBean gps = data.getGps();//GPS
+//                        int balance = data.getBalance();//平衡状态
+//                        int humidity = data.getHumidity();//温度 -25<正常>80
+//                        int temperature = data.getTemperature();//湿度 正常<65
+//
+//                        for (AllShowMarkerBean asmb : markerBeanList) {
+//                            List<Overlay> overlays = asmb.getOverlays();
+//                            if (overlays.size() > 0) {
+//                                for (Overlay ol : overlays) {
+//                                    String deviceNum = ol.getExtraInfo().getString("deviceNum");
+//                                    if (serialNum.equals(deviceNum)) {
+////                                   机器状态 0手动 1自动 2配置 3过障 4充电 5低电 6信采集 7待机 8数据上传 9.设备离线
+//                                        Marker marker = (Marker) ol;
+//                                        BitmapDescriptor bitmap;
+//                                        switch (state) {
+//                                            case 9://设备离线
+//                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_e);
+//                                                marker.setIcon(bitmap);
+//                                                break;
+//                                            case 0://巡检
+//                                            case 1:
+//                                            case 2:
+//                                            case 3:
+//                                            case 6:
+//                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_c);
+//                                                marker.setIcon(bitmap);
+//                                                break;
+//                                            case 4://充电
+//                                            case 8:
+//                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_a);
+//                                                marker.setIcon(bitmap);
+//                                                break;
+//                                            case 7://待机
+//                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_b);
+//                                                marker.setIcon(bitmap);
+//                                                break;
+//                                            case 5://低电（报警）
+//                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_d);
+//                                                marker.setIcon(bitmap);
+//                                                break;
+//                                        }
+////                                        int balance = data.getBalance();//平衡状态
+////                                        int humidity = data.getHumidity();//温度 -25<正常>80
+////                                        int temperature = data.getTemperature();//湿度 正常<65
+//                                        if (balance > 0 || humidity < -25 || humidity > 80 || temperature > 65) {
+//                                            bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_d);
+//                                            marker.setIcon(bitmap);
+//                                        }
+//                                    }
+//
+//                                }
+//                            }
+//                        }
+//
+//                    }
+//                }
+//
+//            }
+//        }, 1000, 1000, TimeUnit.MILLISECONDS);
+    }
+
+    private List<WebDeviceBean> webDeviceBeans = new ArrayList<>();
+
+    @Override
+    public void onWebSocketMessage(String text, int size) {
+        ToastUtils.showShort(text);
+        if (webDeviceBeans.size() == size) {
+            webDeviceBeans.clear();
+        }
+        WebDeviceBean webDeviceBean = GsonUtils.fromJson(text, WebDeviceBean.class);
+        webDeviceBeans.add(webDeviceBean);
+        LogUtils.i("onWebSocketMessage:" + webDeviceBeans.size() + "--" + markerBeanList.size() + "::" + text);
+        WebDeviceBean.DataBean data = webDeviceBean.getData();
+        String serialNum = data.getSerialNum();
+        int state = data.getState();
+
+
+    }
+
+    @Override
+    public void onWebSocketClosed() {
+        ToastUtils.showShort("WebSocketClosed");
+    }
+
+    @Override
+    public void onWebSocketFailure(String strErr) {
+        ToastUtils.showShort("WebSocketFailure：" + strErr);
+        mWebSocket = null;
     }
 }

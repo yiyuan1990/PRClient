@@ -18,6 +18,7 @@ import com.zkkc.prclient.main.utils.LocationService;
 import java.io.File;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
 
 import okhttp3.Cache;
 
@@ -31,6 +32,7 @@ import static com.zkkc.prclient.PRCConstant.BASE_URL;
 public class PRClientApp extends Application {
     private static PRClientApp mInstance;
     public static ExecutorService threadPool;
+    public static ScheduledExecutorService timingThreadPool;
     public static LocationService locationService;
 
     // 单例模式中获取唯一的ExitApplication 实例
@@ -54,6 +56,9 @@ public class PRClientApp extends Application {
         threadPool = ThreadPoolHelp.Builder
                 .cached()
                 .builder();
+        timingThreadPool = ThreadPoolHelp.Builder
+                .schedule(5)
+                .scheduleBuilder();
         initBaiDu();//百度地图
         initVideoPlayer();//GSYVideo全局设置
         initHttp();//ViseHttp初始化

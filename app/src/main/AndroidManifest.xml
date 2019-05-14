@@ -106,6 +106,7 @@
             android:enabled="true"
             android:process=":remote" >
         </service>
+        <service android:name=".service.UpdateMarkerService" />
     </application>
 
 </manifest>

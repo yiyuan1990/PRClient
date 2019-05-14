@@ -6,10 +6,13 @@ package com.zkkc.prclient;
 public class PRCConstant {
     //本地环境
 //    public static final String BASE_URL = "http://172.16.1.228:8182/";
+//    public static final String WEBSOCKET_BASE_URL = "ws://172.16.1.228:8762/websocket/";
     //测试环境
 //    public static final String BASE_URL = "http://172.16.1.152:8182/";
+//    public static final String WEBSOCKET_BASE_URL = "ws://172.16.1.152:8762/websocket/";
     //生产环境
     public static final String BASE_URL = "http://120.79.132.29:8182/";
+    public static final String WEBSOCKET_BASE_URL = "ws://120.79.132.29:8762/websocket/";
 
     /**
      * 登录

@@ -59,4 +59,6 @@ dependencies {
     implementation 'com.shuyu:gsyVideoPlayer-ex_so:6.0.3'
     //baiduMap
     implementation files('libs/BaiduLBS_Android.jar')
+    //socket
+    implementation 'com.tonystark.android:socket:4.2.2'
 }
