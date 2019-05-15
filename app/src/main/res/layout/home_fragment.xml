@@ -10,10 +10,10 @@
         android:orientation="horizontal">
 
         <!--<com.baidu.mapapi.map.MapView-->
-            <!--android:id="@+id/bMapView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:clickable="true" />-->
+        <!--android:id="@+id/bMapView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:clickable="true" />-->
     </LinearLayout>
 
     <RelativeLayout
@@ -183,6 +183,255 @@
             </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlT"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_black_40"
+            android:paddingTop="220dp"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/light_white">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_80"
+                    android:layout_marginTop="@dimen/dp_35"
+                    android:text="线路："
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView1C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textView1"
+                    android:layout_toRightOf="@id/textView1"
+                    android:text="天广线"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView1"
+                    android:layout_alignRight="@id/textView1"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="日期："
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView2C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView1"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_toRightOf="@id/textView1"
+                    android:text="2019-05-15"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView2"
+                    android:layout_alignRight="@id/textView1"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="设备状态："
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView3C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textView3"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_toRightOf="@id/textView1"
+                    android:text="巡检"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView3"
+                    android:layout_alignRight="@id/textView1"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="设备经度："
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView4C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textView4"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_toRightOf="@id/textView1"
+                    android:text="112.111000"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView4"
+                    android:layout_alignRight="@id/textView1"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="设备纬度："
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView5C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textView5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_toRightOf="@id/textView1"
+                    android:text="23.221567"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textView1"
+                    android:layout_marginLeft="@dimen/dp_250"
+                    android:text="设备名称："
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView6C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textView1"
+                    android:layout_toRightOf="@id/textView6"
+                    android:text="设备006"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView1"
+                    android:layout_alignRight="@id/textView6"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="时间："
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView7C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textView7"
+                    android:layout_toRightOf="@id/textView6"
+                    android:text="18:49:26"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView7"
+                    android:layout_alignRight="@id/textView6"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="电量："
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView8C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textView8"
+                    android:layout_toRightOf="@id/textView6"
+                    android:text="80%"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView8"
+                    android:layout_alignRight="@id/textView6"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="温度："
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView9C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textView9"
+                    android:layout_toRightOf="@id/textView6"
+                    android:text="35℃"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView9"
+                    android:layout_alignRight="@id/textView6"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="湿度："
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/textView10C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/textView10"
+                    android:layout_toRightOf="@id/textView6"
+                    android:text="89%"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/sp_14" />
+
+                <Button
+                    android:id="@+id/btnGoVideo"
+                    android:layout_width="@dimen/dp_150"
+                    android:layout_height="@dimen/dp_35"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_85"
+                    android:layout_marginRight="@dimen/dp_250"
+                    android:background="@drawable/btn_out_c"
+                    android:text="进入视频"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
+
+                <ImageView
+                    android:id="@+id/ivPopupClose"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/dp_17"
+                    android:src="@mipmap/popup_close" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>
