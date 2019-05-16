@@ -16,11 +16,11 @@
 
         <ImageView
             android:id="@+id/ivBack"
-            android:layout_width="@dimen/dp_35"
-            android:layout_height="@dimen/dp_35"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_10"
-            android:padding="@dimen/dp_5"
+            android:padding="@dimen/dp_10"
             android:src="@mipmap/back_white" />
 
         <EditText

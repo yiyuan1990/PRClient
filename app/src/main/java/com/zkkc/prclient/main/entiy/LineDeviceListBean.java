@@ -1,5 +1,6 @@
 package com.zkkc.prclient.main.entiy;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -361,7 +362,7 @@ public class LineDeviceListBean {
                 this.deviceList = deviceList;
             }
 
-            public static class TowerListBean {
+            public static class TowerListBean  {
                 /**
                  * charge : 0
                  * gps : [113.248587,23.124097]
@@ -397,7 +398,7 @@ public class LineDeviceListBean {
                 }
             }
 
-            public static class DeviceListBean {
+            public static class DeviceListBean implements Serializable{
                 /**
                  * createBy : null
                  * createDate : 1513787646000

@@ -1,5 +1,6 @@
 package com.zkkc.prclient.main.frage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,11 +33,13 @@ import com.baidu.mapapi.model.LatLng;
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zkkc.prclient.PRClientApp;
 import com.zkkc.prclient.R;
 import com.zkkc.prclient.base.BaseFragment;
+import com.zkkc.prclient.main.act.MediaAct;
 import com.zkkc.prclient.main.adapter.AdHomePopup;
 import com.zkkc.prclient.main.adapter.AdHomePopupDevice;
 import com.zkkc.prclient.main.contract.HomeContract;
@@ -46,8 +49,13 @@ import com.zkkc.prclient.main.entiy.WebDeviceBean;
 import com.zkkc.prclient.main.p.HomePresenter;
 import com.zkkc.prclient.main.utils.LocationService;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -303,11 +311,12 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
         //创建OverlayOptions的集合
         List<OverlayOptions> deviceOptions = new ArrayList<OverlayOptions>();
         //构建Marker图标
-        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_a);
+        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_e);
         for (LineDeviceListBean.DataBean.LineListBean.DeviceListBean dlb : deviceList) {
             LatLng latLng = new LatLng(Double.valueOf(dlb.getLng()), Double.valueOf(dlb.getLat()));
             Bundle bundle = new Bundle();
             bundle.putString("deviceNum", dlb.getDeviceNum());
+            bundle.putSerializable("DATA", dlb);
             //创建OverlayOptions属性
             OverlayOptions option = new MarkerOptions()
                     .position(latLng)
@@ -356,6 +365,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
     /**
      * 百度地图配置
      */
+    LineDeviceListBean.DataBean.LineListBean.DeviceListBean dLB;
+
     private void initBaiDuMap() {
         BaiduMapOptions options = new BaiduMapOptions();
         options.overlookingGesturesEnabled(false);
@@ -385,6 +396,51 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
             public boolean onMarkerClick(Marker marker) {
                 if (rlT.getVisibility() == View.GONE) {
                     rlT.setVisibility(View.VISIBLE);
+                    Bundle extraInfo = marker.getExtraInfo();
+                    dLB = (LineDeviceListBean.DataBean.LineListBean.DeviceListBean) extraInfo.getSerializable("DATA");
+                    long createDate = dLB.getCreateDate();
+                    String time1 = TimeUtils.millis2String(createDate, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH));
+                    String time2 = TimeUtils.millis2String(createDate, new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH));
+
+                    textView1C.setText(dLB.getLineName());//线路名
+                    textView2C.setText(time1);//日期
+//                    textView3C.setText(dLB.getData() + "");
+//                    textView4C.setText(dLB.getLng() + "");
+//                    textView5C.setText(dLB.getLat() + "");
+                    textView6C.setText(dLB.getDeviceName() + "");//设备名
+                    textView7C.setText(time2);//时间
+//                    textView8C.setText(dLB.getData() + "");
+//                    textView9C.setText(dLB.getData() + "");
+//                    textView10C.setText(dLB.getData() + "");
+                    for (WebDeviceBean webDeviceBean : webDeviceBeans) {
+                        WebDeviceBean.DataBean data = webDeviceBean.getData();
+                        if (data.getSerialNum().equals(dLB.getDeviceNum())) {
+                            if (webDeviceBean.getCode() == 170) {
+                                textView3C.setText("离线");//设备状态
+                                textView4C.setText(dLB.getLng());//经度
+                                textView5C.setText(dLB.getLat());//纬度
+                                textView8C.setText("- -");//电量
+                                textView9C.setText("- -");//湿度
+                                textView10C.setText("- -");//温度
+                            } else if (webDeviceBean.getCode() == 150) {
+                                textView3C.setText(data.getState());//设备状态
+                                WebDeviceBean.DataBean.GpsBean gps = data.getGps();
+                                if (gps != null) {
+                                    textView4C.setText(gps.getLongitude());//经度
+                                    textView5C.setText(gps.getLatitude());//纬度
+                                } else {
+                                    textView4C.setText("- -");//经度
+                                    textView5C.setText("- -");//纬度
+                                }
+                                textView8C.setText(data.getElectric() + "%");//电量
+                                textView9C.setText(data.getHumidity() + "℃");//湿度
+                                textView10C.setText(data.getTemperature() + "%");//温度
+                            }
+
+                        }
+                    }
+
+
                 }
                 return false;
             }
@@ -424,6 +480,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
             public void run() {
                 if (markerBeanList.size() > 0 && webDeviceBeans.size() > 0) {
                     for (WebDeviceBean wdb : webDeviceBeans) {
+                        int code = wdb.getCode();
                         WebDeviceBean.DataBean data = wdb.getData();
                         String serialNum = data.getSerialNum();//序列号
                         int state = data.getState();//状态
@@ -439,48 +496,52 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
                                     String deviceNum = ol.getExtraInfo().getString("deviceNum");
                                     if (serialNum.equals(deviceNum)) {
 //                                   机器状态 0手动 1自动 2配置 3过障 4充电 5低电 6信采集 7待机 8数据上传 9.设备离线
-                                        Marker marker = (Marker) ol;
-                                        BitmapDescriptor bitmap;
-                                        switch (state) {
-                                            case 9://设备离线
-                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_e);
-                                                marker.setIcon(bitmap);
-                                                break;
-                                            case 0://巡检
-                                            case 1:
-                                            case 2:
-                                            case 3:
-                                            case 6:
-                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_c);
-                                                marker.setIcon(bitmap);
-                                                break;
-                                            case 4://充电
-                                            case 8:
-                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_a);
-                                                marker.setIcon(bitmap);
-                                                break;
-                                            case 7://待机
-                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_b);
-                                                marker.setIcon(bitmap);
-                                                break;
-                                            case 5://低电（报警）
+                                        if (code == 150) {
+                                            Marker marker = (Marker) ol;
+                                            BitmapDescriptor bitmap;
+                                            switch (state) {
+//                                                case 9://设备离线
+//                                                    bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_e);
+//                                                    marker.setIcon(bitmap);
+//                                                    break;
+                                                case 0://巡检
+                                                case 1:
+                                                case 2:
+                                                case 3:
+                                                case 6:
+                                                    bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_c);
+                                                    marker.setIcon(bitmap);
+                                                    break;
+                                                case 4://充电
+                                                case 8:
+                                                    bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_a);
+                                                    marker.setIcon(bitmap);
+                                                    break;
+                                                case 7://待机
+                                                    bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_b);
+                                                    marker.setIcon(bitmap);
+                                                    break;
+                                                case 5://低电（报警）
 //                                                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_d);
 //                                                marker.setIcon(bitmap);
-                                                setUPM(marker, "报警");
-                                                break;
-                                        }
+                                                    setUPM(marker, "报警");
+                                                    break;
+                                            }
 //                                        int balance = data.getBalance();//平衡状态
 //                                        int humidity = data.getHumidity();//温度 -25<正常>80
 //                                        int temperature = data.getTemperature();//湿度 正常<65
-                                        if (balance > 0) {
+                                            if (balance > 0) {
 //                                            bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_d);
 //                                            marker.setIcon(bitmap);
-                                            setUPM(marker, "平衡状态预警");
-                                        } else if (temperature > 65) {
-                                            setUPM(marker, "湿度：" + temperature + "%");
-                                        } else if (humidity < -25 || humidity > 80) {
-                                            setUPM(marker, "温度：" + humidity + "℃");
+                                                setUPM(marker, "平衡状态预警");
+                                            } else if (temperature > 65) {
+                                                setUPM(marker, "湿度：" + temperature + "%");
+                                            } else if (humidity < -25 || humidity > 80) {
+                                                setUPM(marker, "温度：" + humidity + "℃");
+                                            }
                                         }
+
+
                                     }
 
                                 }
@@ -619,7 +680,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
                 }
                 break;
             case R.id.btnGoVideo://进入视频
-                ToastUtils.showShort("进入视频");
+                startActivity(new Intent(getActivity(), MediaAct.class));
+                EventBus.getDefault().postSticky(dLB);
+
                 break;
             case R.id.ivPopupClose://关闭popup
                 if (rlT.getVisibility() == View.VISIBLE) {

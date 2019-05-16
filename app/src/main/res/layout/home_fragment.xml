@@ -213,7 +213,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/textView1"
                     android:layout_toRightOf="@id/textView1"
-                    android:text="天广线"
+                    android:maxLines="1"
+                    android:text="- -"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/sp_14" />
 
@@ -235,7 +236,8 @@
                     android:layout_below="@id/textView1"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_toRightOf="@id/textView1"
-                    android:text="2019-05-15"
+                    android:maxLines="1"
+                    android:text="- -"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/sp_14" />
 
@@ -257,7 +259,8 @@
                     android:layout_alignBottom="@id/textView3"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_toRightOf="@id/textView1"
-                    android:text="巡检"
+                    android:maxLines="1"
+                    android:text="- -"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/sp_14" />
 
@@ -279,7 +282,8 @@
                     android:layout_alignBottom="@id/textView4"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_toRightOf="@id/textView1"
-                    android:text="112.111000"
+                    android:maxLines="1"
+                    android:text="- -"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/sp_14" />
 
@@ -301,7 +305,8 @@
                     android:layout_alignBottom="@id/textView5"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_toRightOf="@id/textView1"
-                    android:text="23.221567"
+                    android:maxLines="1"
+                    android:text="- -"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/sp_14" />
 
@@ -321,7 +326,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/textView1"
                     android:layout_toRightOf="@id/textView6"
-                    android:text="设备006"
+                    android:maxLines="1"
+                    android:text="- -"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/sp_14" />
 
@@ -342,7 +348,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/textView7"
                     android:layout_toRightOf="@id/textView6"
-                    android:text="18:49:26"
+                    android:maxLines="1"
+                    android:text="- -"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/sp_14" />
 
@@ -363,7 +370,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/textView8"
                     android:layout_toRightOf="@id/textView6"
-                    android:text="80%"
+                    android:maxLines="1"
+                    android:text="- -"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/sp_14" />
 
@@ -384,7 +392,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/textView9"
                     android:layout_toRightOf="@id/textView6"
-                    android:text="35℃"
+                    android:maxLines="1"
+                    android:text="- -"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/sp_14" />
 
@@ -405,7 +414,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/textView10"
                     android:layout_toRightOf="@id/textView6"
-                    android:text="89%"
+                    android:maxLines="1"
+                    android:text="- -"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/sp_14" />
 
@@ -416,7 +426,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="@dimen/dp_85"
                     android:layout_marginRight="@dimen/dp_250"
-                    android:background="@drawable/btn_out_c"
+                    android:background="@drawable/btn_out_b"
                     android:text="进入视频"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_16" />

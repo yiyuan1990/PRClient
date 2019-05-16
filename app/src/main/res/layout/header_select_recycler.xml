@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvDeviceNa"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_out_g"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="天广线"
+        android:textColor="@color/orange" />
+
+    <ImageView
+        android:id="@+id/ivRight"
+        android:layout_width="@dimen/dp_22"
+        android:layout_height="@dimen/dp_18"
+        android:layout_alignRight="@id/tvDeviceNa"
+        android:layout_alignBottom="@id/tvDeviceNa"
+        android:background="@mipmap/ic_delete" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDeviceNa"
+        android:layout_margin="@dimen/dp_10"
+        android:text="设备"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_16" />
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvCon"
+    android:layout_width="@dimen/dp_100"
+    android:layout_height="wrap_content"
+    android:background="@drawable/btn_out_f"
+    android:gravity="center"
+    android:padding="@dimen/dp_10"
+    android:text="天广线" />
