@@ -499,6 +499,10 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomeContract.P
                                         if (code == 150) {
                                             Marker marker = (Marker) ol;
                                             BitmapDescriptor bitmap;
+                                            if (gps != null) {
+                                                marker.setPosition(new LatLng(Double.valueOf(gps.getLongitude()), Double.valueOf(gps.getLatitude())));
+                                            }
+
                                             switch (state) {
 //                                                case 9://设备离线
 //                                                    bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.device_maker_e);

@@ -2,9 +2,11 @@ package com.zkkc.prclient.main.p;
 
 import android.content.Context;
 
+import com.zkkc.prclient.main.callback.IAccessToken;
 import com.zkkc.prclient.main.callback.IQueryLineDeviceList;
 import com.zkkc.prclient.main.contract.MediaContract;
 import com.zkkc.prclient.main.entiy.LineDeviceListBean;
+import com.zkkc.prclient.main.entiy.MyAccessTokenResult;
 import com.zkkc.prclient.main.m.HomeModel;
 import com.zkkc.prclient.main.m.MediaModel;
 
@@ -33,6 +35,21 @@ public class MediaPresenter extends MediaContract.Presenter {
             @Override
             public void onFailure(String strErr) {
                 getView().queryLineDeviceListFailure(strErr);
+            }
+        });
+    }
+
+    @Override
+    public void getMyAccessToken() {
+        mediaModel.getMyAccessToken(new IAccessToken() {
+            @Override
+            public void onSuccess(MyAccessTokenResult b) {
+                getView().accessTokenSuccess(b);
+            }
+
+            @Override
+            public void onFailure(String strErr) {
+            getView().accessTokenFailure(strErr);
             }
         });
     }

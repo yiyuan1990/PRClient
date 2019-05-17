@@ -111,6 +111,11 @@
             android:enabled="true"
             android:process=":remote"></service>
         <service android:name=".service.UpdateMarkerService" />
+        <activity
+            android:name="com.videogo.main.EzvizWebViewActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
+        </activity>
     </application>
 
 </manifest>

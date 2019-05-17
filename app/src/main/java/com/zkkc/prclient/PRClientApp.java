@@ -1,6 +1,7 @@
 package com.zkkc.prclient;
 
 import android.app.Application;
+import android.support.multidex.MultiDex;
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
@@ -8,7 +9,6 @@ import com.luoxudong.app.threadpool.ThreadPoolHelp;
 import com.shuyu.gsyvideoplayer.player.IjkPlayerManager;
 import com.shuyu.gsyvideoplayer.player.PlayerFactory;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
-import com.vise.utils.assist.SSLUtil;
 import com.vise.xsnow.common.ViseConfig;
 import com.vise.xsnow.http.ViseHttp;
 import com.vise.xsnow.http.interceptor.HttpLogInterceptor;
@@ -53,6 +53,7 @@ public class PRClientApp extends Application {
      * 第三方初始化操作
      */
     private void init() {
+        MultiDex.install(this);
         threadPool = ThreadPoolHelp.Builder
                 .cached()
                 .builder();
@@ -62,6 +63,11 @@ public class PRClientApp extends Application {
         initBaiDu();//百度地图
         initVideoPlayer();//GSYVideo全局设置
         initHttp();//ViseHttp初始化
+        initUIKIT();//初始化萤石相关
+    }
+
+    private void initUIKIT() {
+
     }
 
     private void initHttp() {

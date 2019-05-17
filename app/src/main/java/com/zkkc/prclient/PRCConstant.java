@@ -15,6 +15,11 @@ public class PRCConstant {
     public static final String WEBSOCKET_BASE_URL = "ws://120.79.132.29:8762/websocket/";
 
     /**
+     * 萤石AK  测试AccessToken
+     */
+    public static final String ACCESS_TOKEN_URL = "device/token";
+
+    /**
      * 登录
      */
     public static final String LOGIN = "login";
